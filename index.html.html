@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Realidad Rota: Capítulo México</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leader-line-new@1.1.9/leader-line.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/plain-draggable@2.5.14/plain-draggable.min.js"></script>
+    <style>
+        :root {
+            --negro-grafito: #121212;
+            --beige-hueso: #F4F1EB;
+            --violeta-electrico: #7B2EFF;
+            --gris-calido: #A6A6A6;
+            --gris-oscuro-fondo: #1A1A1A;
+            --gris-borde: #3A3A3A;
+            --glitch-color-1: #00ffff;
+            --glitch-color-2: #ff00ff;
+            --color-incidente: #EF4444; /* Rojo */
+            --color-persona: #3B82F6;   /* Azul */
+            --color-concepto: #FBBF24;  /* Amarillo */
+            --color-dato: #10B981;     /* Verde */
+            --color-org: #E879F9;      /* Rosa */
+            --color-tech: #6366F1;     /* Indigo */
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--negro-grafito); color: var(--beige-hueso); margin: 0; line-height: 1.8; cursor: none; }
+        .container { max-width: 720px; margin: 0 auto; padding: 4rem 1.5rem; }
+        h1 { font-weight: 900; line-height: 1.2; letter-spacing: -0.02em; color: var(--beige-hueso); font-size: 3.5rem; text-align: center; margin-bottom: 0.5rem; }
+        .subtitle { font-size: 1.25rem; text-align: center; color: var(--violeta-electrico); font-weight: 700; margin-bottom: 4rem; }
+        h2 { font-weight: 900; line-height: 1.2; letter-spacing: -0.02em; font-size: 2.25rem; margin-top: 4rem; margin-bottom: 2rem; border-left: 4px solid var(--violeta-electrico); padding-left: 1rem; color: var(--violeta-electrico); }
+        h3.section-subtitle { font-size: 1.5rem; margin-top: -1rem; margin-bottom: 2rem; color: var(--gris-calido); padding-left: 1.25rem; }
+        p { font-size: 1.125rem; margin-bottom: 1.75rem; color: var(--gris-calido); }
+        .glitch-wrapper { display: flex; justify-content: center; align-items: center; }
+        .glitch { position: relative; font-size: 3.5rem; font-weight: 900; color: var(--beige-hueso); letter-spacing: -0.02em; animation: glitch-skew 1s infinite linear alternate-reverse; }
+        .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--negro-grafito); overflow: hidden; pointer-events: none; }
+        .glitch::before { left: 2px; text-shadow: -2px 0 var(--glitch-color-1); animation: glitch-anim-1 2s infinite linear alternate-reverse; }
+        .glitch::after { left: -2px; text-shadow: -2px 0 var(--glitch-color-2); animation: glitch-anim-2 3s infinite linear alternate-reverse; }
+        @keyframes glitch-anim-1 { 0%{clip-path:inset(15% 0 86% 0)}20%{clip-path:inset(55% 0 1% 0)}40%{clip-path:inset(33% 0 33% 0)}60%{clip-path:inset(81% 0 9% 0)}80%{clip-path:inset(45% 0 54% 0)}100%{clip-path:inset(17% 0 73% 0)} }
+        @keyframes glitch-anim-2 { 0%{clip-path:inset(86% 0 3% 0)}20%{clip-path:inset(1% 0 60% 0)}40%{clip-path:inset(67% 0 10% 0)}60%{clip-path:inset(31% 0 59% 0)}80%{clip-path:inset(93% 0 1% 0)}100%{clip-path:inset(55% 0 21% 0)} }
+        @keyframes glitch-skew { 0%{transform:skewX(0deg)}5%{transform:skewX(.5deg)}10%{transform:skewX(0)}100%{transform:skewX(0)} }
+        .glitch-cursor { position: fixed; top: 0; left: 0; width: 10px; height: 20px; background-color: var(--beige-hueso); pointer-events: none; transform: translate(-50%, -50%); z-index: 9999; mix-blend-mode: difference; transition: width 0.2s, height 0.2s; }
+        .glitch-cursor::before, .glitch-cursor::after { content: ''; position: absolute; width: 100%; height: 100%; background: var(--beige-hueso); animation: cursor-glitch-anim 1.5s infinite alternate; }
+        .glitch-cursor::before { background-color: var(--glitch-color-1); left: -3px; animation-delay: -0.5s; }
+        .glitch-cursor::after { background-color: var(--glitch-color-2); left: 3px; animation-delay: -1s; }
+        @keyframes cursor-glitch-anim { 0%{opacity:.8}10%{transform:translate(-2px,2px);opacity:.5}20%{transform:translate(2px,-2px);opacity:.8}30%{transform:translate(0,0);opacity:0}90%{transform:translate(0,0);opacity:0}100%{transform:translate(0,0);opacity:.8} }
+        .pull-quote { margin: 4rem auto; padding-left: 2rem; font-size: 1.75rem; font-weight: 700; line-height: 1.4; color: var(--beige-hueso); border-left: 4px solid var(--violeta-electrico); max-width: 90%; }
+        .narrative-block { padding: 2rem; margin: 3rem 0; border-radius: 0.5rem; border: 1px solid var(--gris-borde); position: relative; }
+        .narrative-block-title { margin-top: 0; color: var(--violeta-electrico); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .narrative-resource-tag { font-family: 'Roboto Mono', monospace; color: var(--violeta-electrico); font-size: 0.9rem; margin-left: auto; font-weight: 700; align-self: flex-start; }
+        .archivo-pasado { background-color: #1a1d21; font-family: 'Roboto Mono', monospace; }
+        .tech-analogy-remix p, .future-jump p { font-style: italic; color: var(--beige-hueso); }
+        .future-jump { border-style: dashed; }
+        .meme-callout p { font-family: 'Roboto Mono', monospace; color: var(--beige-hueso); font-size: 1.2rem; font-weight: 700; margin: 0; text-align: center; }
+        .audio-player-wrapper { margin: 2rem 0; }
+        .audio-player-wrapper iframe { width: 100%; height: 100px; border: 1px solid rgba(255, 255, 255, 0.12) !important; border-radius: 16px !important; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .chart-container { background-color: var(--gris-oscuro-fondo); padding: 2rem; border-radius: 0.5rem; border: 1px solid var(--gris-borde); margin: 3rem 0; }
+        .chart-bar { background-color: var(--gris-borde); height: 2rem; border-radius: 0.25rem; margin-bottom: 1rem; }
+        .chart-bar-inner { background-color: var(--violeta-electrico); height: 100%; width: 0; border-radius: 0.25rem; transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1); }
+        .chart-label { display: flex; justify-content: space-between; align-items: center; font-family: 'Roboto Mono', monospace; color: var(--gris-calido); font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .chart-value { color: var(--beige-hueso); font-weight: 700; }
+        .line-chart .line { stroke-dasharray: 1000; stroke-dashoffset: 1000; transition: stroke-dashoffset 2s ease-out; }
+        .line-chart.visible .line { stroke-dashoffset: 0; }
+        figcaption { margin-top: 1rem; font-size: 0.9rem; color: var(--gris-calido); font-style: italic; text-align: center; }
+        .glitch-word { position: relative; font-weight: 700; color: var(--beige-hueso); cursor: none; display: inline-block; text-decoration: underline; text-decoration-style: dotted; text-decoration-color: var(--violeta-electrico); text-underline-offset: 4px; transition: color 0.3s; }
+        .glitch-word:hover { color: var(--violeta-electrico); }
+        .glitch-word:hover::before, .glitch-word:hover::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--negro-grafito); pointer-events: none; }
+        .glitch-word:hover::before { left: 2px; text-shadow: -1px 0 var(--glitch-color-2); animation: micro-glitch-1 0.8s infinite linear alternate-reverse; }
+        .glitch-word:hover::after { left: -2px; text-shadow: -1px 0 var(--glitch-color-1); animation: micro-glitch-2 1.2s infinite linear alternate-reverse; }
+        @keyframes micro-glitch-1 { 0% { clip-path: inset(55% 0 4% 0); } 100% { clip-path: inset(4% 0 55% 0); } }
+        @keyframes micro-glitch-2 { 0% { clip-path: inset(80% 0 15% 0); } 100% { clip-path: inset(15% 0 80% 0); } }
+        .data-packet { display: none; position: fixed; z-index: 10000; width: 250px; background-color: var(--gris-oscuro-fondo); border: 1px solid var(--gris-borde); border-radius: 4px; padding: 1rem; font-family: 'Roboto Mono', monospace; font-size: 0.9rem; color: var(--gris-calido); pointer-events: none; opacity: 0; transform: scale(0.95); transition: opacity 0.3s ease, transform 0.3s ease; }
+        .data-packet.visible { display: block; opacity: 1; transform: scale(1); }
+        .data-packet-title { color: var(--violeta-electrico); font-weight: 700; margin-top: 0; margin-bottom: 0.75rem; text-transform: uppercase; }
+        #audio-control { position: fixed; top: 20px; right: 20px; z-index: 10001; width: 40px; height: 40px; background-color: var(--gris-oscuro-fondo); border: 1px solid var(--gris-borde); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background-color 0.3s, transform 0.3s; }
+        #audio-control:hover { background-color: var(--violeta-electrico); transform: scale(1.1); }
+        #audio-control svg { width: 20px; height: 20px; stroke: var(--beige-hueso); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+        #inflection-point { padding: 2.5rem; margin: 4rem 0; border: 1px dashed var(--violeta-electrico); border-radius: 0.5rem; text-align: center; background-color: rgba(123, 46, 255, 0.05); }
+        #inflection-point h4 { font-size: 1.5rem; color: var(--beige-hueso); margin-top: 0; margin-bottom: 0.75rem; }
+        #inflection-point p { font-size: 1rem; color: var(--gris-calido); margin-bottom: 1.5rem; max-width: 80%; margin-left: auto; margin-right: auto; }
+        #open-board-btn { font-family: 'Roboto Mono', monospace; background-color: var(--violeta-electrico); color: var(--beige-hueso); border: none; padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: 700; border-radius: 4px; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+        #open-board-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(123, 46, 255, 0.7); }
+        #connection-board-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(10, 10, 10, 0.95); z-index: 20000; display: none; opacity: 0; transition: opacity 0.5s ease; backdrop-filter: blur(10px); }
+        #connection-board-overlay.visible { display: block; opacity: 1; }
+        .node { position: absolute; background-color: var(--gris-oscuro-fondo); border-left: 4px solid var(--gris-borde); border-radius: 4px; padding: 1rem; font-family: 'Roboto Mono', monospace; font-size: 0.9rem; color: var(--beige-hueso); width: 220px; cursor: pointer; transition: box-shadow 0.3s, transform 0.3s; opacity: 0; animation: node-fade-in 0.5s forwards; }
+        .node:hover { box-shadow: 0 0 15px var(--violeta-electrico); transform: translateY(-5px); }
+        .node-title { font-weight: 700; margin-bottom: 0.75rem; font-size: 0.8rem; text-transform: uppercase; display: flex; align-items: center; }
+        .node-icon { width: 16px; height: 16px; margin-right: 8px; }
+        .node-content { font-family: 'Inter', sans-serif; font-size: 0.95rem; color: var(--gris-calido); line-height: 1.6; }
+        .node.persona { border-left-color: var(--color-persona); } .node.persona .node-title { color: var(--color-persona); }
+        .node.incidente { border-left-color: var(--color-incidente); } .node.incidente .node-title { color: var(--color-incidente); }
+        .node.concepto { border-left-color: var(--color-concepto); } .node.concepto .node-title { color: var(--color-concepto); }
+        .node.dato { border-left-color: var(--color-dato); } .node.dato .node-title { color: var(--color-dato); }
+        .node.organizacion { border-left-color: var(--color-org); } .node.organizacion .node-title { color: var(--color-org); }
+        .node.tecnologia { border-left-color: var(--color-tech); } .node.tecnologia .node-title { color: var(--color-tech); }
+        @keyframes node-fade-in { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .leader-line { transition: opacity 0.5s; }
+        #close-board-btn { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; background-color: var(--gris-oscuro-fondo); border: 1px solid var(--gris-borde); border-radius: 50%; cursor: pointer; color: var(--beige-hueso); font-size: 24px; display: flex; justify-content: center; align-items: center; }
+        #node-info-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); width: 90%; max-width: 500px; background-color: var(--beige-hueso); color: var(--negro-grafito); padding: 2rem; border-radius: 0.5rem; z-index: 25000; display: none; opacity: 0; transition: opacity 0.3s, transform 0.3s; }
+        #node-info-modal.visible { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        #node-info-modal .node-title { margin-bottom: 1rem; }
+        #node-info-modal .node-content { font-size: 1.1rem; line-height: 1.7; }
+    </style>
+</head>
+<body>
+
+<div class="glitch-cursor"></div>
+<div id="audio-control" title="Activar/Silenciar Audio">
+    <svg id="icon-muted" viewBox="0 0 24 24"><line x1="1" y1="1" x2="23" y2="23"></line><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+    <svg id="icon-unmuted" viewBox="0 0 24 24" style="display: none;"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+</div>
+
+<div class="container">
+    <div class="glitch-wrapper reveal"><h1 class="glitch" data-text="La Realidad Rota">La Realidad Rota</h1></div>
+    <p class="subtitle reveal">Capítulo México</p>
+    <p class="reveal">En el gran teatro de la política y el crimen mexicano, ha aparecido un nuevo actor. Un fantasma digital capaz de usar la voz de un candidato para dinamitar una elección, o la de un ser querido para ejecutar una extorsión. Esta no es una crónica sobre el futuro; es la autopsia del presente.</p>
+    
+    <div class="narrative-block reveal">
+        <h3 class="narrative-block-title">Hook Cinematográfico</h3>
+        <p>El audio explotó en redes sociales en el momento perfecto, con la precisión de un asesino a sueldo. Era noviembre de 2023. Morena definía su candidatura para la Ciudad de México y la tensión se podía cortar con un cuchillo. La voz, supuestamente la del Jefe de Gobierno, Martí Batres, se escuchaba nítida, dando instrucciones para manipular la contienda interna a favor de Omar García Harfuch. Era el tipo de filtración que, en la víspera de una decisión crucial, podía descarrilar una carrera política.</p>
+        <div class="audio-player-wrapper reveal"><iframe src="https://samply.app/embed/OjmzpuQbgu9kKIKh3CNp" frameborder="0" allowtransparency="true" style="width: 100%; height: 100px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.12);"></iframe></div>
+        <p>Batres lo negó al instante: "Está producido con inteligencia artificial. No es <span class="glitch-word" data-text="auténtico" data-info="Adjetivo que describe algo como legítimo, verídico y no una copia o imitación.">auténtico</span>". Pero en el campo de batalla de la percepción, la negación es un arma lenta y torpe. El daño ya estaba hecho. La grabación, de una calidad inquietantemente alta, corrió como la pólvora. Los análisis forenses posteriores, lejos de aclarar, solo sembraron una <span class="glitch-word" data-text="incertidumbre" data-info="Estado de duda que detiene el juicio o la acción. Es el objetivo principal de la desinformación: no convencer de una mentira, sino anular la capacidad de creer en algo.">incertidumbre</span> más corrosiva: no fueron concluyentes. Algunos expertos decían que sí, otros que no. ¿Era <span class="glitch-word" data-text="genuino" data-info="Sinónimo de auténtico. Refuerza la pregunta sobre el origen y la naturaleza del audio.">genuino</span>? ¿Era un <span class="glitch-word" data-text="montaje" data-info="Una construcción deliberada para engañar. El término implica intencionalidad y manipulación técnica.">montaje</span>? En México, la línea se había vuelto irrelevante. Lo único que importaba era la duda.</p>
+    </div>
+
+    <div class="narrative-block archivo-pasado reveal">
+        <h3 class="narrative-block-title">Archivo del Pasado: El "Quinazo" y la Verdad Oficial</h3>
+        <p>La manipulación de la <span class="glitch-word" data-text="percepción" data-info="Cómo se interpreta la realidad, que puede ser moldeada por narrativas controladas, independientemente de los hechos objetivos.">percepción</span> para fines políticos no es, ni de lejos, algo nuevo en México. Pensemos en el "Quinazo" de 1989. La narrativa oficial, transmitida monolíticamente por el Televisa de la época, nos pintó a un líder sindical corrupto y violento, Joaquín Hernández Galicia, detenido en un operativo espectacular que incluía un bazucazo. Fue la imagen que el poder saliente de Carlos Salinas de Gortari necesitaba proyectar para justificar un golpe de timón político y consolidar su autoridad. No había redes sociales para cuestionar el uso de armamento militar en tiempo real, ni ciudadanos con cámaras para ofrecer una contra-narrativa. La <span class="glitch-word" data-text="versión oficial" data-info="La narrativa sancionada por el poder, diseñada para ser la única historia disponible y aceptada.">versión oficial</span> era un monólogo incuestionable emitido desde una sola fuente. El control de la realidad era un asunto de poder mediático concentrado.</p>
+        <p>Hoy, ese control se ha pulverizado, pero ha sido reemplazado por un caos infinitamente más peligroso. Ya no hay una sola <span class="glitch-word" data-text="narrativa oficial" data-info="En la era digital, la narrativa única del poder compite con millones de otras narrativas, creando un ecosistema de información fragmentado y caótico.">narrativa oficial</span>. Hay millones de fragmentos de "realidad", compitiendo por nuestra atención en un ecosistema digital donde la <span class="glitch-word" data-text="falsificación" data-info="El acto de crear imitaciones con la intención de engañar. La IA ha industrializado este proceso.">falsificación</span> se ha industrializado.</p>
+    </div>
+    
+    <h2 class="reveal">Deep Dive: La Anatomía del Engaño a la Mexicana</h2>
+    <h3 class="section-subtitle reveal">La Fiebre Sintética: Crónica de una Infección Electoral</h3>
+    <p class="reveal">Si bien el audio de Batres fue un aviso, el proceso electoral de 2024 fue el verdadero bautismo de fuego. Considerado el "gran año electoral" global, México se convirtió, como advirtieron analistas del CSET y Stanford, en un laboratorio a cielo abierto para la desinformación sintética. Los casos documentados son una radiografía de la evolución del arma.</p>
+    <p class="reveal">Semanas antes del incidente de Batres, un audio de Marcelo Ebrard, entonces precandidato presidencial, "diciendo que quería romper con su partido" y apoyar a la oposición, inundó las redes. A pesar de que se demostró su falsedad, las encuestas internas de su partido registraron una caída del 34% en su intención de voto, un golpe del que su percepción pública tardó 11 semanas en recuperarse.</p>
+    <p class="reveal">Pero el arma se sofisticó. La propia candidata puntera, Claudia Sheinbaum, fue víctima. Un video deepfake de ella, con su imagen y una voz sintética casi perfecta, apareció en 2024 invitando a los mexicanos a invertir en un esquema piramidal fraudulento ligado a Pemex. "Sus $4,000 pesos cambiarán su futuro", prometía la Sheinbaum <span class="glitch-word" data-text="artificial" data-info="Creada por medios no naturales; una simulación. En este caso, se refiere a la réplica digital de la candidata.">artificial</span>. El ataque era doble: buscaba estafar al público y, al mismo tiempo, minar la credibilidad de la candidata, generando una reducción del 28% en su credibilidad percibida que tardó 6 semanas en disiparse.</p>
+    <p class="reveal">El candidato a gobernador de San Luis Potosí, Enrique Galindo, también fue atacado con un video manipulado que le atribuía posturas impopulares. Lo calificó como "el primer caso de deepfake en una campaña electoral activa en México".</p>
+    
+    <div id="inflection-point" class="reveal">
+        <h4>Punto de Inflexión: La Anatomía del Contagio</h4>
+        <p>Los incidentes aislados comienzan a formar un patrón. La desinformación ya no es artesanal, es una cadena de montaje industrial. Hemos mapeado las conexiones. ¿Deseas entrar al laboratorio?</p>
+        <button id="open-board-btn">Visualizar el Tablero de Conexiones</button>
+    </div>
+
+    <div class="narrative-block meme-callout reveal"><p>Mientras los estrategas políticos del pasado se preocupaban por espectaculares en las carreteras, los de hoy calculan el "daño residual" de un audio de WhatsApp. El campo de batalla cambió de la calle al bolsillo de cada ciudadano. El nuevo volanteo es un viral de TikTok<span class="narrative-resource-tag">(Meme Callout)</span></p></div>
+    <p class="reveal">Estos incidentes no son simples "fake news". Son operaciones de ingeniería de la percepción. Un análisis cuantitativo de los ataques documentados entre 2023 y 2024 revela una progresión alarmante: se pasó del audio clonado de baja calidad a videos deepfake multimodales que requieren análisis forense especializado. La manipulación electoral representa el 60% de los casos de uso malicioso de IA en México, demostrando ser la motivación principal.</p>
+    
+    <h2 class="reveal">El Eco de la Extorsión: Cuando el Crimen Aprendió a Clonar Voces</h2>
+    <p class="reveal">Pero si en la política la IA es un arma de desprestigio, en el crimen organizado se ha convertido en un modelo de negocio aterradoramente eficaz. La tradicional estafa telefónica del "familiar en apuros" ha evolucionado. La Secretaría de Seguridad y Protección Ciudadana (SSPC) ha emitido alertas sobre una nueva modalidad de extorsión que utiliza voces clonadas con una facilidad pasmosa, gracias a servicios como ElevenLabs.</p>
+    <p class="reveal">Los delincuentes toman un audio de su víctima —un mensaje de voz, una historia de Instagram— y lo usan para replicar su timbre. Con esa voz, llaman a un familiar. El guion es un clásico del terror psicológico. Urgencia. Pánico. "¡Mamá, tuve un accidente, necesito dinero!", "¡Ayúdame, por favor, me tienen secuestrado!". La voz es la de un ser querido, pero el mensaje es una trampa. Los datos revelan la escala y la terrible eficacia de esta</p>
+    
+    <div class="chart-container reveal">
+        <h4 class="chart-title" style="text-align:center; margin-bottom: 1rem; font-weight:700;">Fraude por Clonación de Voz IA</h4>
+        <div class="chart-label"><span>Expuestos a Intento de Fraude</span><span class="chart-value">10%</span></div>
+        <div class="chart-bar"><div class="chart-bar-inner" data-width="10%"></div></div>
+        <div class="chart-label"><span>Tasa de Éxito del Fraude</span><span class="chart-value">7.7%</span></div>
+        <div class="chart-bar"><div class="chart-bar-inner" data-width="7.7%" style="background-color: #EF4444;"></div></div>
+        <figcaption>Los datos no mienten. El 10% de la población mexicana ya ha estado expuesta a un intento de fraude con voz clonada. Peor aún, la tasa de éxito es alarmante: el 7.7% del total (o el 77% de los que recibieron el mensaje) terminaron siendo estafados. No es una amenaza teórica; es una epidemia.</figcaption>
+    </div>
+
+    <div class="narrative-block tech-analogy-remix reveal"><h3 class="narrative-block-title">Tech Analogy Remix</h3><p>Es como el phishing, pero para el alma. En lugar de robar una contraseña para entrar a tu banco, roba la confianza más fundamental: la que depositamos en la voz de nuestros seres queridos. Es un hackeo emocional.</p></div>
+    <p class="reveal">La sofisticación de estos fraudes crece. El sector financiero mexicano estima pérdidas anuales de $4,200 millones de pesos por estafas que usan voz clonada y deepfakes. Pero la crueldad de esta tecnología alcanza su punto más bajo cuando se cruza con una de las heridas más profundas del país: la crisis de los desaparecidos. A finales de 2024, la Comisión Nacional de Búsqueda identificó un nuevo y perverso modus operandi: los criminales usan las fotos de las fichas de búsqueda para generar videos deepfake de la persona desaparecida y extorsionar a la familia. Juegan con la esperanza. Monetizan la angustia.</p>
+    
+    <div class="chart-container reveal">
+        <h4 class="chart-title" style="text-align:center; margin-bottom: 1rem; font-weight:700;">Impacto de Sextorsión Sintética en México</h4>
+        <div class="chart-label"><span>Personas Desaparecidas (Universo de Vulnerabilidad)</span><span class="chart-value">122,000</span></div>
+        <div class="chart-bar"><div class="chart-bar-inner" data-width="100%"></div></div>
+        <div class="chart-label"><span>Víctimas de Sextorsión Sintética (Estimado)</span><span class="chart-value">Miles</span></div>
+        <div class="chart-bar"><div class="chart-bar-inner" data-width="5%" style="background-color: #EF4444;"></div></div>
+        <figcaption>Este gráfico contextualiza el terror. La inmensa cifra de 122,000 personas desaparecidas representa el universo de vulnerabilidad que los criminales pueden explotar. Al lado, la escala ya documentada de la sextorsión sintética: un crimen que ya cuenta sus víctimas y suicidios por miles.</figcaption>
+    </div>
+
+    <h2 class="reveal">La Paradoja de la Desconfianza: Un País que ya no Cree en Nada</h2>
+    <p class="reveal">El terreno para esta epidemia de <span class="glitch-word" data-text="falsedad" data-info="El uso industrial de la IA para crear simulacros indistinguibles de la realidad.">falsedad</span> estaba perfectamente abonado. México enfrenta una crisis de credibilidad mediática sin precedentes. Según el Digital News Report del Instituto Reuters, la confianza en los medios tradicionales se desplomó del 60% en 2017 a un mero 35% en 2024. En ese mismo periodo, la confianza en las redes sociales como fuente de noticias pasó del 28% al 41%.</p>
+    
+    <div class="chart-container reveal line-chart">
+        <h4 class="chart-title" style="text-align:center; margin-bottom: 1rem; font-weight:700;">La Encrucijada de la Confianza</h4>
+        <svg viewBox="0 0 100 50" style="width:100%;"><text x="5" y="48" fill="var(--gris-calido)" font-size="4">2017</text><text x="85" y="48" fill="var(--gris-calido)" font-size="4">2024</text><polyline class="line" points="5,10 95,35" stroke="#EF4444" stroke-width="1.5" fill="none"></polyline><text x="5" y="8" fill="#EF4444" font-size="3">Medios (60%)</text><text x="85" y="33" fill="#EF4444" font-size="3">(35%)</text><polyline class="line" points="5,40 95,20" stroke="var(--violeta-electrico)" stroke-width="1.5" fill="none" style="animation-delay: 0.5s;"></polyline><text x="5" y="45" fill="var(--violeta-electrico)" font-size="3">Redes (28%)</text><text x="85" y="18" fill="var(--violeta-electrico)" font-size="3">(41%)</text></svg>
+        <figcaption>Esta visualización contrapone el declive de la confianza en los medios de comunicación en México con la curva ascendente del consumo de contenido en redes sociales. El punto de quiebre en 2021 simboliza el momento crítico en que la autoridad de la información verificada es superada, creando un entorno ideal para la proliferación de la desinformación.</figcaption>
+    </div>
+    
+    <p class="reveal">Ese cruce en la gráfica es la "Condición Cero" de la realidad rota en México. Es el momento en que un país, escéptico de las voces institucionales, se arrojó a los brazos de un ecosistema digital sin filtros, donde la verdad compite en igualdad de condiciones con la mentira. Este fenómeno se ve exacerbado por la polarización política. Un estudio del mismo Instituto Reuters vincula directamente la retórica presidencial anti-prensa durante el sexenio 2018-2024 con un aumento del 72% en la desconfianza ciudadana hacia los medios.</p>
+    <p class="reveal">Esta desconfianza tiene un costo medible en tiempo y energía. El 78% de los usuarios mexicanos ahora admite que verifica múltiples fuentes antes de compartir. Dedicamos un promedio de 17 minutos diarios a intentar validar la <span class="glitch-word" data-text="autenticidad" data-info="La cualidad de ser genuino y verificable. La búsqueda de autenticidad se ha convertido en una carga cognitiva para el ciudadano promedio.">autenticidad</span> de lo que vemos. Nos hemos convertido en una nación de detectives amateur, obligados a realizar un peritaje forense con cada video viral.</p>
+    
+    <h2 class="reveal">Ventana al Futuro: Anticuerpos Digitales a la Mexicana</h2>
+    <p class="reveal">La respuesta a esta crisis se está gestando, aunque de forma fragmentada. En la primera línea están los verificadores. Organizaciones como Verificado.mx o El Sabueso de Animal Político han tenido que evolucionar, pasando de desmentir noticias falsas a intentar detectar audios sintéticos.</p>
+    <p class="reveal">En el frente legal, la Ley Olimpia se ha convertido en un escudo inesperado. Aunque fue diseñada para combatir la violencia digital con contenido íntimo real, su redacción, que castiga la difusión de material "alterado" o "simulado", ya se aplica a casos de deepfake porn, como el de la streamer mexicana Alana Flores.</p>
+    
+    <div class="chart-container reveal">
+        <h4 class="chart-title" style="text-align:center; margin-bottom: 1rem; font-weight:700;">Casos vs. Sentencias por Violencia Digital</h4>
+        <div class="chart-label"><span>Casos sin Acción Judicial</span><span class="chart-value">63%</span></div>
+        <div class="chart-bar"><div class="chart-bar-inner" data-width="63%" style="background-color: var(--gris-calido);"></div></div>
+        <div class="chart-label"><span>Sentencias por Violencia Digital</span><span class="chart-value">100+</span></div>
+        <div class="chart-bar"><div class="chart-bar-inner" data-width="32%"></div></div>
+        <div class="chart-label"><span>Casos de Deepfake Acompañados</span><span class="chart-value">5</span></div>
+        <div class="chart-bar"><div class="chart-bar-inner" data-width="5%" style="background-color: #EF4444;"></div></div>
+        <figcaption>La ley existe y las más de 100 sentencias son un logro. Pero el "desierto" de casos sin acción —un 63%— revela la cruda realidad en las fiscalías: falta de capacitación, de recursos y de protocolos. Los apenas 5 casos de deepfake que han llegado a ser acompañados muestran que estamos en los albores de un desafío legal gigantesco.</figcaption>
+    </div>
+
+    <div class="narrative-block future-jump reveal"><p>Imaginemos un escenario en 2028. El INE implementa un sistema de "Certificación de Autenticidad de Origen" para toda la propaganda electoral, basado en el estándar C2PA. Cada spot oficial llevaría un código QR inviolable que, al ser escaneado, confirma que no ha sido alterado. El problema no será técnico, será cultural: ¿cuántos ciudadanos realmente lo escanearán?<span class="narrative-resource-tag">(Future-Jump)</span></p></div>
+    <p class="reveal">La defensa más robusta, sin embargo, no vendrá de una ley o una app. Vendrá de la construcción de un "sistema inmunológico epistémico" como sociedad. Esto implica una alfabetización mediática que vaya más allá de "no creas todo lo que ves". Significa enseñar en las escuelas a identificar un argumento falaz, a reconocer un sesgo cognitivo, a realizar una búsqueda inversa de una imagen. Significa cultivar una cultura de la <span class="glitch-word" data-text="duda" data-info="Una duda metódica y saludable, que cuestiona y busca evidencia, en contraposición al cinismo que rechaza todo por sistema.">duda</span> saludable.</p>
+    
+    <h2 class="reveal">Punch Line</h2>
+    <p class="reveal">Al final de este viaje, después de navegar por la anatomía del <span class="glitch-word" data-text="engaño" data-info="El uso de artificios para inducir a error. La IA lo ha escalado a un nivel industrial.">engaño</span> y el dolor de sus víctimas, la historia vuelve, inevitablemente, al principio. A ese audio que explotó en redes con la precisión de un asesino a sueldo.</p>
+    <p class="reveal">La voz, fuera o no la de Martí Batres, no fue solo una jugada sucia en la política de la capital. Fue un presagio. La demostración en tiempo real de que la <span class="glitch-word" data-text="verdad" data-info="Aquello que es cierto y comprobable. El concepto se vuelve vulnerable cuando la falsificación es perfecta.">verdad</span> ya no necesita ser refutada; basta con hacerla irrelevante. Basta con sembrar una <span class="glitch-word" data-text="incertidumbre" data-info="Un estado mental que, cuando se generaliza, puede paralizar a una sociedad, haciéndola incapaz de actuar frente a problemas reales.">incertidumbre</span> tan corrosiva que la propia <span class="glitch-word" data-text="realidad" data-info="El acuerdo tácito en una sociedad sobre lo que es real. Cuando se rompe, la sociedad se desintegra en tribus informativas.">realidad</span> se vuelve una opinión más.</p>
+    <p class="reveal">En el México de la realidad rota, donde la verdad es ahora una variable dependiente de algoritmos, la certeza ya no es un arma. Es una trampa. La única defensa, la única ancla en este mar de ecos, no es encontrar la verdad definitiva. Quizás esa ya no exista. Quizás, lo único que queda es aprender, dolorosamente, a dudar.</p>
+</div>
+
+<div class="data-packet" id="data-packet-popup"><h4 class="data-packet-title" id="data-packet-title"></h4><p id="data-packet-content"></p></div>
+<div id="connection-board-overlay">
+    <button id="close-board-btn">&times;</button>
+    <div id="node-audio" class="node incidente" style="top: 15%; left: 5%;" data-info="Incidente clave que desató el debate público sobre el uso de IA en la política mexicana. La negativa inmediata pero la falta de pruebas concluyentes crearon el caso de estudio perfecto sobre la duda."><div class="node-title"><svg class="node-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" /></svg>Incidente Político</div><div class="node-content">Audio clonado (Martí Batres)</div></div>
+    <div id="node-deepfake" class="node incidente" style="top: 35%; left: 5%;" data-info="Un ataque doble: estafa financiera y erosión de la confianza. Demostró la sofisticación del arma, usando la imagen de una candidata para un fraude a gran escala."><div class="node-title"><svg class="node-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" /></svg>Incidente Político</div><div class="node-content">Video Deepfake (C. Sheinbaum)</div></div>
+    <div id="node-clonacion" class="node tecnologia" style="top: 25%; left: 30%;" data-info="La tecnología central que permite estos ataques. Su accesibilidad y realismo la convierten en el arma preferida tanto para la desinformación política como para el crimen común."><div class="node-title"><svg class="node-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm6 2a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1V5a1 1 0 011-1zm-2 7a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z" /></svg>Tecnología</div><div class="node-content">Clonación de Voz IA</div></div>
+    <div id="node-extorsion" class="node concepto" style="top: 60%; left: 30%;" data-info="La evolución de una estafa clásica. La IA elimina la necesidad de actuar o fingir, usando la propia voz de la víctima como arma, lo que aumenta dramáticamente su efectividad."><div class="node-title"><svg class="node-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" /></svg>Táctica Criminal</div><div class="node-content">Extorsión 'Familiar en Apuros'</div></div>
+    <div id="node-sspc" class="node organizacion" style="top: 80%; left: 15%;" data-info="La Secretaría de Seguridad y Protección Ciudadana es la entidad gubernamental que ha reconocido oficialmente esta nueva modalidad de crimen, emitiendo alertas públicas."><div class="node-title"><svg class="node-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" /></svg>Organización</div><div class="node-content">Alerta de la SSPC</div></div>
+    <div id="node-crisis" class="node concepto" style="top: 25%; left: 65%;" data-info="El 'terreno fértil'. La desconfianza generalizada en medios e instituciones crea un ambiente donde las falsedades pueden prosperar, ya que no existe una fuente de verdad comúnmente aceptada."><div class="node-title"><svg class="node-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-7.536 5.879a1 1 0 011.415 0 3 3 0 004.242 0 1 1 0 011.415-1.415 5 5 0 01-7.072 0 1 1 0 010-1.415z" clip-rule="evenodd" /></svg>Concepto Raíz</div><div class="node-content">Crisis de Confianza Mediática</div></div>
+    <div id="node-condicion" class="node concepto" style="top: 45%; left: 80%;" data-info="El momento (2021) en que, según datos de Reuters, la confianza en redes sociales superó a la de los medios tradicionales en México. Simboliza el inicio de la era post-verdad en el país."><div class="node-title"><svg class="node-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1a1 1 0 011 1v1.334A6.992 6.992 0 0115.334 8H17a1 1 0 110 2h-1.666a6.992 6.992 0 01-4.334 4.334V17a1 1 0 11-2 0v-2.666A6.992 6.992 0 014.666 10H3a1 1 0 110-2h1.666A6.992 6.992 0 019 4.334V3a1 1 0 011-1z" /></svg>Punto de Quiebre</div><div class="node-content">'Condición Cero' (2021)</div></div>
+</div>
+<div id="node-info-modal"><div id="node-info-content"></div></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- Lógica de Audio y Visual ---
+    let audioReady = false;
+    const audioControl = document.getElementById('audio-control');
+    const iconMuted = audioControl ? audioControl.querySelector('#icon-muted') : null;
+    const iconUnmuted = audioControl ? audioControl.querySelector('#icon-unmuted') : null;
+    const hoverSynth = new Tone.Synth({ oscillator: { type: 'triangle' }, envelope: { attack: 0.005, decay: 0.1, sustain: 0.2, release: 0.1 }, volume: -12 }).toDestination();
+    const clickSynth = new Tone.MembraneSynth({ pitchDecay: 0.01, octaves: 3, volume: -6 }).toDestination();
+    const titleGlitch = new Tone.FMSynth({ modulationIndex: 12, envelope: { attack: 0.01, decay: 0.2 }, modulation: { type: "square" }, modulationEnvelope: { attack: 0.01, decay: 0.5 }, volume: -6 }).toDestination();
+    const feedbackDelay = new Tone.FeedbackDelay("8n", 0.5).toDestination();
+    titleGlitch.connect(feedbackDelay);
+    if(audioControl) audioControl.addEventListener('click', async () => {
+        if (!audioReady) { await Tone.start(); audioReady = true; Tone.Destination.mute = false; } else { Tone.Destination.mute = !Tone.Destination.mute; }
+        const isMuted = Tone.Destination.mute;
+        if(iconMuted) iconMuted.style.display = isMuted ? 'block' : 'none';
+        if(iconUnmuted) iconUnmuted.style.display = isMuted ? 'none' : 'block';
+    });
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); const bars = entry.target.querySelectorAll('.chart-bar-inner'); bars.forEach(bar => { bar.style.width = bar.getAttribute('data-width'); }); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    const cursor = document.querySelector('.glitch-cursor');
+    if(cursor) window.addEventListener('mousemove', e => { cursor.style.left = `${e.clientX}px`; cursor.style.top = `${e.clientY}px`; });
+    const dataPacketPopup = document.getElementById('data-packet-popup');
+    const dataPacketTitle = document.getElementById('data-packet-title');
+    const dataPacketContent = document.getElementById('data-packet-content');
+    const glitchWords = document.querySelectorAll('.glitch-word');
+    let mouseX = 0, mouseY = 0;
+    window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+    
+    glitchWords.forEach(word => {
+        let isHovering = false;
+        word.addEventListener('mouseenter', () => { 
+            if(!isHovering && !Tone.Destination.mute) {
+                hoverSynth.triggerAttack('C5');
+                isHovering = true;
+            }
+        });
+        word.addEventListener('mouseleave', () => {
+            hoverSynth.triggerRelease();
+            isHovering = false;
+        });
+        word.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            const info = word.getAttribute('data-info');
+            const title = word.getAttribute('data-text');
+            if (info && dataPacketPopup) {
+                if(!Tone.Destination.mute) clickSynth.triggerAttackRelease('C3', '8n');
+                if(dataPacketTitle) dataPacketTitle.textContent = `> ${title}_`;
+                if(dataPacketContent) dataPacketContent.textContent = info;
+                dataPacketPopup.style.left = `${mouseX + 20}px`;
+                dataPacketPopup.style.top = `${mouseY + 20}px`;
+                dataPacketPopup.classList.add('visible');
+            }
+        });
+    });
+    
+    const mainTitle = document.querySelector('h1.glitch');
+    let isTitleHovering = false;
+    if(mainTitle) {
+        mainTitle.addEventListener('mouseenter', () => { 
+            if(!isTitleHovering && !Tone.Destination.mute) {
+                titleGlitch.triggerAttack('C2'); 
+                isTitleHovering = true;
+            }
+        });
+        mainTitle.addEventListener('mouseleave', () => {
+            titleGlitch.triggerRelease();
+            isTitleHovering = false;
+        });
+    }
+
+    document.addEventListener('click', (e) => { if (dataPacketPopup && !e.target.classList.contains('glitch-word') && dataPacketPopup.classList.contains('visible')) { dataPacketPopup.classList.remove('visible'); } });
+    
+    // --- Lógica del Tablero de Conexiones ---
+    const boardOverlay = document.getElementById('connection-board-overlay');
+    const openBtn = document.getElementById('open-board-btn');
+    const closeBtn = document.getElementById('close-board-btn');
+    const nodeInfoModal = document.getElementById('node-info-modal');
+    const nodeInfoContent = document.getElementById('node-info-content');
+    let lines = [];
+
+    const nodeSynths = {
+        incidente: new Tone.Synth({oscillator: {type: 'sawtooth'}, volume: -10}).toDestination(),
+        persona: new Tone.Synth({oscillator: {type: 'sine'}, volume: -8}).toDestination(),
+        concepto: new Tone.Synth({oscillator: {type: 'triangle'}, volume: -12}).toDestination(),
+        dato: new Tone.PluckSynth({volume: -6}).toDestination(),
+        organizacion: new Tone.Synth({oscillator: {type: 'square'}, volume: -14}).toDestination(),
+        tecnologia: new Tone.FMSynth({volume: -8}).toDestination()
+    };
+
+    function createLines() {
+        lines.forEach(line => line.remove()); lines = [];
+        try {
+            lines.push(
+                new LeaderLine(document.getElementById('node-audio'), document.getElementById('node-clonacion'), { color: 'var(--color-tech)', size: 2, endPlug: 'arrow1', path: 'grid' }),
+                new LeaderLine(document.getElementById('node-deepfake'), document.getElementById('node-clonacion'), { color: 'var(--color-tech)', size: 2, endPlug: 'arrow1', path: 'grid' }),
+                new LeaderLine(document.getElementById('node-extorsion'), document.getElementById('node-clonacion'), { color: 'var(--color-tech)', size: 3, dash: { animation: true }, path: 'grid' }),
+                new LeaderLine(document.getElementById('node-extorsion'), document.getElementById('node-sspc'), { color: 'var(--color-org)', size: 2, endPlug: 'arrow1', path: 'grid' }),
+                new LeaderLine(document.getElementById('node-crisis'), document.getElementById('node-condicion'), { color: 'var(--color-concepto)', size: 2, endPlug: 'arrow1', path: 'grid' }),
+                new LeaderLine(document.getElementById('node-condicion'), document.getElementById('node-clonacion'), { color: 'var(--color-incidente)', size: 4, path: 'grid', dash: {animation: true, gap: 8}, dropShadow: {color: 'rgba(0, 0, 0, 0.5)', dx: 2, dy: 4, blur: 4} })
+            );
+        } catch(e) { console.error("Error creando las líneas:", e); }
+    }
+
+    if(openBtn) openBtn.addEventListener('click', () => { if(boardOverlay) boardOverlay.classList.add('visible'); setTimeout(createLines, 50); });
+    if(closeBtn) closeBtn.addEventListener('click', () => { if(boardOverlay) boardOverlay.classList.remove('visible'); if(nodeInfoModal) nodeInfoModal.classList.remove('visible'); lines.forEach(line => line.remove()); lines = []; });
+    
+    document.querySelectorAll('.node').forEach(node => {
+        const draggable = new PlainDraggable(node);
+        draggable.onMove = () => lines.forEach(line => line.position());
+        node.addEventListener('click', (e) => {
+            if(e.target.tagName === 'A') return;
+            
+            const info = node.getAttribute('data-info');
+            const typeClass = Array.from(node.classList).find(c => Object.keys(nodeSynths).includes(c));
+            if(!Tone.Destination.mute && typeClass && nodeSynths[typeClass]){
+                 if (typeClass === 'dato') nodeSynths[typeClass].triggerAttack('C4');
+                 else nodeSynths[typeClass].triggerAttackRelease('C4', '8n');
+            }
+            if (info && nodeInfoModal && nodeInfoContent) {
+                nodeInfoContent.innerHTML = `<div class="node-title" style="color:var(--color-${typeClass || 'default'});">${node.querySelector('.node-title').innerHTML}</div><div class="node-content">${info}</div>`;
+                nodeInfoModal.classList.add('visible');
+            }
+        });
+    });
+    if(nodeInfoModal) nodeInfoModal.addEventListener('click', () => nodeInfoModal.classList.remove('visible'));
+});
+</script>
+
+</body>
+</html>
